@@ -1,6 +1,6 @@
 import fetchAPI from "./fetch_api.js";
 
-export default async function getJobs(parentId, auth) {
+export default async function createTDOFolder(parentId, auth) {
   var data = await fetchAPI(`
     mutation createFolder {
       createFolder(input: {
@@ -15,5 +15,5 @@ export default async function getJobs(parentId, auth) {
     }
   `, auth)
 
-  return data?.jobs
+  return data?.createFolder
 }

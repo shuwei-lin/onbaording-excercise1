@@ -1,6 +1,6 @@
 import fetchAPI from "./fetch_api.js";
 
-export default async function getJobs(id, auth) {
+export default async function publishSchema(id, auth) {
   var data = await fetchAPI(`
     # Note: Pass in the Schema ID for the id value
     mutation publishSchemaDraft {

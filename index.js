@@ -1,33 +1,28 @@
 
 import createAdhocJob from "./queries/create-adhoc-job.js";
 import createScheduledJob from "./queries/create-scheduled-job.js";
+import publishSchema from "./queries/publish_schema.js";
+import createSchema from "./queries/create-schema.js";
+import createDataRegistry from "./queries/create-data-registry.js";
+import createTDOFolder from "./queries/create-tdo-folder.js";
 import getJobStatus from "./queries/get-job-status.js";
-import axios from 'axios'
-import fetchAPI from "./queries/fetch_api.js"
 import getJobs from "./queries/getJobs.js";
 import login from "./queries/login.js"
 
-const GQL_URI = process.env.GQL_URI || 'https://api.dev.us-1.veritone.com/v3/graphql'   // defaults to DEV
-const CLUSTER_ID = process.env.CLUSTER_ID || 'rt-9d7a5d1b-ffe0-4d71-a982-190522cdf273'  // defaults to DEV
-const USERNAME = process.env.USERNAME
-const PASSWORD = process.env.PASSWORD
-let AUTH_TOKEN = process.env.AUTH_TOKEN
 
 async function index() {
-
-
 	var userLogin = await login();
 	var auth = 'bearer ' + userLogin.token;
 
 
 	// Exercise 1 ------------------------------------------------
-	//var newAdhocJob = await createAdhocJob(auth);
+	var newAdhocJob = await createAdhocJob(auth);
 
 	var newAdhocJobId = "22020612_zBczPp4IGL" //newAdhocJob.id
 
 	console.log(newAdhocJobId)
 
-	//var newScheduleJob = await createScheduledJob(auth);
+	var newScheduleJob = await createScheduledJob(auth);
 
 	var newScheduleJobId = 139017 //newScheduleJob.id
 
@@ -54,6 +49,28 @@ async function index() {
 
 	// Exercise 2 ------------------------------------------------
 
+
+	// Create data registry
+	var DataRegistry = await createDataRegistry(auth)
+	var dataRegistryId = DataRegistry.id
+
+	// Create Schema Draft
+	var upsertSchemaDraft = await createSchema(dataRegistryId, auth)
+	var schemaId = upsertSchemaDraft.id
+
+	// publish Schema
+	var SchemaState = await publishSchema(schemaId, auth)
+
+	console.log(dataRegistryId, schemaId, SchemaState)
+
+
+	// Create TDO Folder
+	var createFolder = await createTDOFolder("5e017019-3b05-42af-9c56-6b690c0bc13f", auth) // the folder id is specific to user/organization
+	var TDOFolderId = createFolder.id
+
+	console.log(TDOFolderId)
+
+	// move adhoc job to TDO folder
 
 
 }

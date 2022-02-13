@@ -1,6 +1,6 @@
 import fetchAPI from "./fetch_api.js";
 
-export default async function getJobs(dataRegistryId, auth) {
+export default async function createSchema(dataRegistryId, auth) {
   var data = await fetchAPI(`
     # Note: Use the dataRegistryId value from the createDataRegistry mutation.
     mutation createSchemaDraft {
