@@ -7,6 +7,8 @@ import createDataRegistry from "./queries/create-data-registry.js";
 import createTDOFolder from "./queries/create-tdo-folder.js";
 import getJobStatus from "./queries/get-job-status.js";
 import fileTDO from "./queries/file-tdo.js";
+import updateTDOwithSDO from "./queries/update-tdo-with-sdo.js";
+import getTDOAssets from "./queries/get-tdo-asset.js";
 import getJobs from "./queries/getJobs.js";
 import login from "./queries/login.js"
 
@@ -77,6 +79,16 @@ async function index() {
 	var fileTDOId = fileTemporalDataObject.id
 
 	console.log(fileTDOId)
+
+	// add asset of type. Update TDO with SDO using previous defined schema. 
+	var updateTDO = await updateTDOwithSDO(newAdhocJobTargetId, schemaId, auth)
+
+	console.log(updateTDO)
+
+	// get TDO assets 
+	var TDOAssets = await getTDOAssets(newAdhocJobTargetId, auth)
+
+	console.log(TDOAssets)
 
 }
 
