@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+import fetch from "node-fetch"
 
 export default async function fetchAPI(query, auth, { variables } = {}) {
   const API_URL = "https://api.dev.us-1.veritone.com/v3/graphql";
