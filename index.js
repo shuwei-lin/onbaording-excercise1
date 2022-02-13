@@ -6,6 +6,7 @@ import createSchema from "./queries/create-schema.js";
 import createDataRegistry from "./queries/create-data-registry.js";
 import createTDOFolder from "./queries/create-tdo-folder.js";
 import getJobStatus from "./queries/get-job-status.js";
+import fileTDO from "./queries/file-tdo.js";
 import getJobs from "./queries/getJobs.js";
 import login from "./queries/login.js"
 
@@ -19,6 +20,7 @@ async function index() {
 	var newAdhocJob = await createAdhocJob(auth);
 
 	var newAdhocJobId = "22020612_zBczPp4IGL" //newAdhocJob.id
+	var newAdhocJobTargetId = newAdhocJob.targetId
 
 	console.log(newAdhocJobId)
 
@@ -71,7 +73,10 @@ async function index() {
 	console.log(TDOFolderId)
 
 	// move adhoc job to TDO folder
+	var fileTemporalDataObject = await fileTDO(newAdhocJobTargetId, TDOFolderId, auth)
+	var fileTDOId = fileTemporalDataObject.id
 
+	console.log(fileTDOId)
 
 }
 

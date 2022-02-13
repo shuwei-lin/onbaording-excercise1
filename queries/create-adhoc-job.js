@@ -104,6 +104,7 @@ export default async function createAdhocJob(auth) {
         }
       ) {
         id
+        targetId
       }
     }
   `, auth)
